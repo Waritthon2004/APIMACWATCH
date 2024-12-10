@@ -77,10 +77,11 @@ func LoginUser(c *fiber.Ctx) error {
 }
 
 type Log struct {
-	Mac      string `json:"Mac"`
-	Hostname string `json:"Hostname"`
-	IP       string `json:"IP"`
-	Time     string `json:"Time"`
+	Mac       string `json:"Mac"`
+	Hostname  string `json:"Hostname"`
+	IP        string `json:"IP"`
+	Time      string `json:"Time"`
+	formatime string `json:"formatime"`
 }
 
 func PostLog(c *fiber.Ctx) error {
@@ -103,10 +104,10 @@ func PostLog(c *fiber.Ctx) error {
 	}
 
 	// Prepare the SQL query
-	query := `INSERT INTO Log (Mac, Hostname, IP, Time) VALUES (?, ?, ?, ?)`
+	query := `INSERT INTO Log (Mac, Hostname, IP, Time,formatime) VALUES (?, ?, ?, ?,?)`
 
 	// Execute the query
-	_, err := db.Exec(query, p.Mac, p.Hostname, p.IP, p.Time)
+	_, err := db.Exec(query, p.Mac, p.Hostname, p.IP, p.Time, p.formatime)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"status":  "error",
